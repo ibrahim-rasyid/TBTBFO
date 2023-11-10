@@ -1,4 +1,5 @@
 from FileHandler import FileHandler
+import time
 
 class PDA:
     def __init__(self):
@@ -36,7 +37,7 @@ class PDA:
             previousStackSymbol = currentStackSymbol
             currentStackSymbol = self.stack[len(self.stack)-1]
             print('{}\t {}\t {}\t ({}, {})'.format(currentState, char, previousStackSymbol, currentStackSymbol, self.stack))
-            #time.sleep(2)
+            time.sleep(2)
 
         if(currentState in finalStates):
             print('String accepted by PDA.')
@@ -47,30 +48,36 @@ def main():
     fh = FileHandler()
     pda = PDA()
     automataFilePath = input('Enter the automata file path: ')
-    lines = fh.readFile(automataFilePath)
+    lines = fh.readFile('PDA/' + automataFilePath)
+    # print(lines)
     print('Reading Automata File')
-    #time.sleep(2)
+    time.sleep(2)
+    print('Loading Details from Automata File: ')
+    time.sleep(3)
+    parsedLines = fh.parseFile(lines)
+    print('States: ', parsedLines['states'])
+    print('Input Symbols: ', parsedLines['input_symbols'])
+    print('Stack Symbols: ', parsedLines['stack_symbols'])
+    print('Initial State: ', parsedLines['initial_state'])
+    print('Initial Stack Symbol: ', parsedLines['initial_stack'])
+    print('Final States: ', parsedLines['final_states'])
+    print('Productions List:')
+    for production in parsedLines['productions']:
+        print('\t', production)
+    time.sleep(2)
     print('Automata File Successfully Read')
-    #time.sleep(2)
-    inputString = input('Enter input String (or end): ')
-    while inputString != "end":
-        inputString = inputString.rstrip()
-        print('Loading Details from Automata File: ')
-        #time.sleep(3)
-        parsedLines = fh.parseFile(lines)
-        print('States: ', parsedLines['states'])
-        print('Input Symbols: ', parsedLines['input_symbols'])
-        print('Stack Symbols: ', parsedLines['stack_symbols'])
-        print('Initial State: ', parsedLines['initial_state'])
-        print('Initial Stack Symbol: ', parsedLines['initial_stack'])
-        print('Final States: ', parsedLines['final_states'])
-        print('Productions List:')
-        for production in parsedLines['productions']:
-            print('\t', production)
-        #time.sleep(2)
-        print('Details loaded')
+    time.sleep(2)
+    testFilePath = input('Enter test file path (or end): ')
+    while testFilePath != "end":
+        testString = ""
+        testStringLines = fh.readFile('TestFile/' + testFilePath)
+        for line in testStringLines:
+            testString += line
+        print('Reading string from file...')
+        time.sleep(2)
+        print('String successfully read')
         print('Computing the Transition Table:')
-        pda.compute(inputString, parsedLines)
-        inputString = input('Enter input String (or end): ')
+        pda.compute(testString, parsedLines)
+        testFilePath = input('Enter test file path (or end): ')
 
 main()
