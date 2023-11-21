@@ -27,7 +27,7 @@ class PDA:
                 if ((production[0] == currentState) and (production[1] == char) and (production[2] == currentStackSymbol)):
                     currentState = production[3]
                     if(len(production[4]) == 2):
-                        self.stack.append(char)
+                        self.stack.append(production[4][0])
                     elif(len(production[4]) == 3):
                         self.stack.append(char)
                         self.stack.append(char)
@@ -37,7 +37,7 @@ class PDA:
             previousStackSymbol = currentStackSymbol
             currentStackSymbol = self.stack[len(self.stack)-1]
             print('{}\t {}\t {}\t ({}, {})'.format(currentState, char, previousStackSymbol, currentStackSymbol, self.stack))
-            time.sleep(2)
+            time.sleep(0.5)
 
         if(currentState in finalStates):
             print('String accepted by PDA.')
@@ -74,6 +74,7 @@ def main():
         for line in testStringLines:
             testString += line
         print('Reading string from file...')
+        print(testString)
         time.sleep(2)
         print('String successfully read')
         print('Computing the Transition Table:')
