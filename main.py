@@ -37,7 +37,7 @@ class PDA:
             previousStackSymbol = currentStackSymbol
             currentStackSymbol = self.stack[len(self.stack)-1]
             print('{}\t {}\t {}\t ({}, {})'.format(currentState, char, previousStackSymbol, currentStackSymbol, self.stack))
-            time.sleep(2)
+            # time.sleep(2)
 
         if(currentState in finalStates):
             print('String accepted by PDA.')
