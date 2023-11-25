@@ -50,7 +50,7 @@ def create_token(sentence):
     tokenArray = []
     for token in tokens:
         tokenArray.append(token)
-    print(" ".join(tokenArray))
+    print("TOKEN : " + " ".join(tokenArray))
     return " ".join(tokenArray)
 
-create_token('test2.txt')
+create_token("test/test.html")
