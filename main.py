@@ -1,22 +1,21 @@
 from FileHandler import FileHandler
-import time
 from file_processing import create_token
-
 class PDA:
     def __init__(self):
         self.stack = []
 
     def compute(self, ListToken, parsedLines):
-        # Retrieve all information
+        #Retrieve all information
         self.stack = []
         initStackSymbol = parsedLines['initial_stack']
         self.stack.append(initStackSymbol)
         finalStates = parsedLines['final_states']
         initialState = parsedLines['initial_state']
+        stackSymbols = parsedLines['stack_symbols']
         productions = parsedLines['productions']
-        ListToken.insert(0, 'e')
+        ListToken.insert(0,'e')
         ListToken.append('e')
-
+        previousStackSymbol = initStackSymbol
         currentStackSymbol = initStackSymbol
         currentState = initialState
 
@@ -93,13 +92,15 @@ class PDA:
         if result:
             print("ACCEPTED")
         else:
-            print('String rejected by PDA.')
+            print("REJECTED")
+    
 
 def main():
     fh = FileHandler()
     pda = PDA()
     automataFilePath = input('Enter the automata file path: ')
     lines = fh.readFile('PDA/' + automataFilePath)
+    # print(lines)
     print('Reading Automata File')
     print('Loading Details from Automata File: ')
     parsedLines = fh.parseFile(lines)
@@ -121,6 +122,4 @@ def main():
     print('Computing the Transition Table:')
     pda.compute(ListToken, parsedLines)
 
-
-if __name__ == "__main__":
-    main()
+main()
