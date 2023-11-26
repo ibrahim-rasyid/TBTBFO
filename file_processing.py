@@ -44,7 +44,7 @@ def create_token(sentence):
     tokenArray = []
     for token in tokens:
         tokenArray.append(token)
-    # print("TOKEN : " + " ".join(tokenArray))
+    print("TOKEN : " + " ".join(tokenArray))
     return tokenArray
 
-# create_token("test.html")
+create_token("test.html")
