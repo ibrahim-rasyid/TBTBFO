@@ -1,7 +1,7 @@
 token_exp = [
     (r'(?<=>)[\n \t]*(([ \t]*[\w]+[^<]*[ \t]*)+(\n)*)+[\n \t]*(?=<)','TEXT'),
     (r'(?=<!--)((.)+)(?<=-->)', "COMMENT"), # KOMENTAR
-    (r'<', '<'), #KSKI
+    # (r'<', '<'), #KSKI
     (r'>', '>'), #KSKA
     
     # ATTRIBUTE GLOBAL
@@ -31,31 +31,31 @@ token_exp = [
     (r"[\s]*(method='(GET|POST)')(\s)*","METHOD"),
     
     # HTML TAG
-    (r'(?<=<)[\s]*(html)(\s)*', "HTML"),
-    (r'(?<=<)[\s]*(/html)(\s)*', "HTMLCLOSE"),
+    (r'[\s]*(<html)(\s)*', "HTML"),
+    (r'[\s]*(</html>)(\s)*', "HTMLCLOSE"),
     
     # HEAD TAG
-    (r'(?<=<)[\s]*(head)(\s)*', "HEAD"),
-    (r'(?<=<)[\s]*(/head)(\s)*', "HEADCLOSE"),
+    (r'[\s]*(<head)(\s)*', "HEAD"),
+    (r'[\s]*(</head>)(\s)*', "HEADCLOSE"),
     
     # BODY TAG
-    (r'(?<=<)[\s]*(body)(\s)*', "BODY"),
-    (r'(?<=<)[\s]*(/body)(\s)*', "BODYCLOSE"),
+    (r'[\s]*(<body)(\s)*', "BODY"),
+    (r'[\s]*(</body>)(\s)*', "BODYCLOSE"),
     
     # TITLE TAG
-    (r'(?<=<)[\s]*(title)(\s)*', "TITLE"),
-    (r'(?<=<)[\s]*(/title)(\s)*', "TITLECLOSE"),
+    (r'[\s]*(<title)(\s)*', "TITLE"),
+    (r'[\s]*(</title>)(\s)*', "TITLECLOSE"),
     
     # LINK TAG (Void)
-    (r'(?<=<)[\s]*(link)(\s)*', "LINK"),
+    (r'[\s]*(<link)(\s)*', "LINK"),
 
     # SCRIPT TAG 
-    (r'(?<=<)[\s]*(script)(\s)*', "SCRIPT"),
-    (r'(?<=<)[\s]*(/script)(\s)*', "SCRIPTCLOSE"),
+    (r'[\s]*(<script)(\s)*', "SCRIPT"),
+    (r'[\s]*(</script>)(\s)*', "SCRIPTCLOSE"),
     
     # H1 TAG
-    (r'(?<=<)[\s]*(h1)(\s)*', "H1"),
-    (r'(?<=<)[\s]*(/h1)(\s)*', "H1CLOSE"),
+    (r'[\s]*(<h1)(\s)*', "H1"),
+    (r'[\s]*(</h1>)(\s)*', "H1CLOSE"),
     
     # H2 TAG
     (r'(?<=<)[\s]*(h2)(\s)*', "H2"),
