@@ -1,42 +1,62 @@
 from FileHandler import FileHandler
 import time
-
+from file_processing import create_token
 class PDA:
     def __init__(self):
         self.stack = []
 
-    def compute(self, inputString, parsedLines):
+    def compute(self, ListToken, parsedLines):
         #Retrieve all information
         self.stack = []
-        inputString += 'e'
         initStackSymbol = parsedLines['initial_stack']
         self.stack.append(initStackSymbol)
         finalStates = parsedLines['final_states']
         initialState = parsedLines['initial_state']
         stackSymbols = parsedLines['stack_symbols']
         productions = parsedLines['productions']
+        ListToken.insert(0,'e')
+        ListToken.append('e')
 
         currentStackSymbol = initStackSymbol
         currentState = initialState
 
         print('State\tInput\tStack\tMove')
         print('{}\t {}\t {}\t ({}, {})'.format(currentState, '_', 'Z', currentStackSymbol, self.stack))
-        for char in inputString:
+        for token in ListToken:
             #print('Current TOS', currentStackSymbol)
             for production in productions:
-                if ((production[0] == currentState) and (production[1] == char) and (production[2] == currentStackSymbol)):
+                stop = False
+                print(token)
+                print(" Production State : " + production[0])
+                print(" Current State : " + currentState)
+                print(" Production Token : " + production[1])
+                print(" Current Token : " + token)
+                print(" Production Stack Symbol : " + production[2])
+                print(" Current Stack Symbol : " + currentStackSymbol)
+                print((production[0] == currentState) and (production[1] == token) and (production[2] == currentStackSymbol))
+                if ((production[0] == currentState) and (production[1] == token) and (production[2] == currentStackSymbol)):
+                    print(production[0])
+                    print(production[1])
+                    print(production[2])
+                    print(production[3])
+                    print(production[4])
                     currentState = production[3]
-                    if(len(production[4]) == 2):
-                        self.stack.append(production[4][0])
-                    elif(len(production[4]) == 3):
-                        self.stack.append(char)
-                        self.stack.append(char)
-                    elif ((production[4] == 'e') and (len(self.stack) != 1)):
-                        self.stack.pop()
-                        break
+                    self.stack.pop()
+                    stop = False
+                    production[4].reverse()
+                    for symbol in production[4]:
+                        if(symbol != 'e'):
+                            self.stack.append(symbol)
+                    stop = True
+                    break
+                if stop:
+                    break
+            if(len(self.stack) - 1 >= 0):
+                currentStackSymbol = self.stack[len(self.stack)-1]
+            else:
+                currentStackSymbol = production[4][0]
             previousStackSymbol = currentStackSymbol
-            currentStackSymbol = self.stack[len(self.stack)-1]
-            print('{}\t {}\t {}\t ({}, {})'.format(currentState, char, previousStackSymbol, currentStackSymbol, self.stack))
+            print('{}\t {}\t {}\t ({}, {})'.format(currentState, token, previousStackSymbol, currentStackSymbol, self.stack))
             time.sleep(0.5)
 
         if(currentState in finalStates):
@@ -64,21 +84,13 @@ def main():
     print('Productions List:')
     for production in parsedLines['productions']:
         print('\t', production)
-    time.sleep(2)
     print('Automata File Successfully Read')
-    time.sleep(2)
     testFilePath = input('Enter test file path (or end): ')
-    while testFilePath != "end":
-        testString = ""
-        testStringLines = fh.readFile('TestFile/' + testFilePath)
-        for line in testStringLines:
-            testString += line
-        print('Reading string from file...')
-        print(testString)
-        time.sleep(2)
-        print('String successfully read')
-        print('Computing the Transition Table:')
-        pda.compute(testString, parsedLines)
-        testFilePath = input('Enter test file path (or end): ')
+    ListToken = create_token('TestFile/' + testFilePath)
+    print('Reading string from file...')
+    print('String successfully read')
+    print(ListToken)
+    print('Computing the Transition Table:')
+    pda.compute(ListToken, parsedLines)
 
 main()
