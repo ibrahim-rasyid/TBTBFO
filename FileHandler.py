@@ -38,10 +38,25 @@ class FileHandler:
         productions = lines[6:]
         for i in range(len(productions)):
             productionku = productions[i].rstrip().split()                
-            productions[i] = [productionku[0], productionku[1], productionku[2], productionku[3],productionku[4:]]
-        # for i in range(len(productions)):
-        #     for j in range():
-        #         production = productions[i]
+            productions[i] = [productionku[0], productionku[1], productionku[2], productionku[3],[productionku[4:]]]
+        print("List index hapus")
+        listindexhapus = []
+        for i in range(0,len(productions)):
+            production = productions[i]
+            for j in range(i+1,len(productions)):
+                production2 = productions[j]
+                if(production[0] == production2[0] and production[1] == production2[1] and production[2] == production2[2] and production2[4] not in production[4]):
+                    print(production[4])
+                    print(production2[4])
+                    listindexhapus.append(j)
+                    production[4].append(production2[4][0])
+        print(listindexhapus)
+        listindexhapus = list(dict.fromkeys(listindexhapus))
+        print(productions)
+        for item in sorted(listindexhapus, reverse = True): 
+            del productions[item]
+        # print(productions)
+        
         parsedLines = {'states':states,
                         'input_symbols':input_symbols,
                         'stack_symbols':stack_symbols,
