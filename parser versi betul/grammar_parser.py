@@ -10,7 +10,7 @@ def CYK_parse(CNF, string_input):
                     # print(rule)
                     T[j][j].add(head)
                     # print(T)
-        # print("this")
+        # print("\nthis")
         for i in range(j, -1, -1):
             for k in range(i, j):
                 for head, body in CNF.items():

@@ -52,6 +52,8 @@ def CFG_to_CNF(CFG):
             for rule_unit in body_unit:
                 if len(rule_unit) == 1:
                     CFG[head_unit].remove(rule_unit)
+    print("\nHFJDHKJFFSD\n")
+    print(CFG)
 
     # STEP 3: Replace Body with 3 or more Variables
     new_productions = {}

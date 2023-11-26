@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     # print(CFG_to_CNF(read_grammar("grammar.txt")))
 
-    if CYK_parse(CFG_to_CNF(read_grammar("grammardummy.txt")), create_token(args.nama_file)):
+    if CYK_parse(CFG_to_CNF(read_grammar("cfg.txt")), create_token(args.nama_file)):
         print("ACCEPTED")
     else:
         print("SYNTAX ERROR")

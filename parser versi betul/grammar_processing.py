@@ -19,7 +19,7 @@ def read_grammar(nama_file):
         baris = file.readline()
 
     file.close()
-    print("Grammar : " + str(cfg) + "\n")
+    # print("Grammar : " + str(cfg) + "\n")
     # print(cfg)
     return cfg
 
@@ -33,8 +33,6 @@ def is_terminal(string):
         "BODYCLOSE",
         "TITLE",
         "TITLECLOSE",
-        "LINK" ,
-        "LINKCLOSE",
         "SCRIPT" ,
         "SCRIPTCLOSE",
         "H1" ,
@@ -77,12 +75,26 @@ def is_terminal(string):
         "TDCLOSE",
         "TH",
         "THCLOSE",
-        "WORD",
+        "TEXT",
         "LINK",
         "BR",
         "HR",
         "IMG",
         "INPUT",
+        "<",
+        ">",
+        "ID",
+        "STYLE",
+        "CLASS",
+        "REL",
+        "HREF",
+        "SRC",
+        "ALT",
+        "TYPEBUTTON",
+        "TYPEINPUT",
+        "ACTION",
+        "METHOD",
+        "COMMENT",
     ]
     
     return string in list_of_terminal

@@ -1,9 +1,34 @@
 token_exp = [
     (r'(?<=>)[\n \t]*(([ \t]*[\w]+[^<]*[ \t]*)+(\n)*)+[\n \t]*(?=<)','TEXT'),
-    (r'(?=<!--)((.)+)(?<=-->)', None), # KOMENTAR
+    (r'(?=<!--)((.)+)(?<=-->)', "COMMENT"), # KOMENTAR
     (r'<', '<'), #KSKI
     (r'>', '>'), #KSKA
-    (r'\n', None), #NEWLINE
+    
+    # ATTRIBUTE GLOBAL
+    (r'[\s]*(id="(.)*?")(\s)*',"ID"),
+    (r"[\s]*(id='(.)*?')(\s)*","ID"),
+    (r'[\s]*(style="(.)*?")(\s)*',"STYLE"),
+    (r"[\s]*(style='(.)*?')(\s)*","STYLE"),
+    (r'[\s]*(class="(.)*?")(\s)*',"CLASS"),
+    (r"[\s]*(class='(.)*?')(\s)*","CLASS"),
+    
+    # ATTRIBUTE TAMBAHAN
+    (r'[\s]*(rel="(.)*?")(\s)*',"REL"),
+    (r"[\s]*(rel='(.)*?')(\s)*","REL"),
+    (r'[\s]*(href="(.)*?")(\s)*',"HREF"),
+    (r"[\s]*(href='(.)*?')(\s)*","HREF"),
+    (r'[\s]*(src="(.)*?")(\s)*',"SRC"),
+    (r"[\s]*(src='(.)*?')(\s)*","SRC"),
+    (r'[\s]*(alt="(.)*?")(\s)*',"ALT"),
+    (r"[\s]*(alt='(.)*?')(\s)*","ALT"),
+    (r'[\s]*(type="(submit|reset|button)")(\s)*',"TYPEBUTTON"),
+    (r"[\s]*(type='(submit|reset|button)')(\s)*","TYPEBUTTON"),
+    (r'[\s]*(type="(text|password|email|number|checkbox)")(\s)*',"TYPEINPUT"),
+    (r"[\s]*(type='(text|password|email|number|checkbox)')(\s)*","TYPEINPUT"),
+    (r'[\s]*(action="(.)*?")(\s)*',"ACTION"),
+    (r"[\s]*(action='(.)*?')(\s)*","ACTION"),
+    (r'[\s]*(method="(GET|POST)")(\s)*',"METHOD"),
+    (r"[\s]*(method='(GET|POST)')(\s)*","METHOD"),
     
     # HTML TAG
     (r'(?<=<)[\s]*(html)(\s)*', "HTML"),
@@ -52,21 +77,6 @@ token_exp = [
     (r'(?<=<)[\s]*(h6)(\s)*', "H6"),
     (r'(?<=<)[\s]*(/h6)(\s)*', "H6CLOSE"),
     
-    # P TAG
-    (r'(?<=<)[\s]*(p)(\s)*', "P"),
-    (r'(?<=<)[\s]*(/p)(\s)*', "PCLOSE"),
-    
-    # BR TAG (Void)
-    (r'(?<=<)[\s]*(br)(\s)*', "BR"),
-    
-    # EM TAG
-    (r'(?<=<)[\s]*(em)(\s)*', "EM"),
-    (r'(?<=<)[\s]*(/em)(\s)*', "EMCLOSE"),
-    
-    # B TAG
-    (r'(?<=<)[\s]*(b)(\s)*', "B"),
-    (r'(?<=<)[\s]*(/b)(\s)*', "BCLOSE"),
-    
     # ABBR TAG
     (r'(?<=<)[\s]*(abbr)(\s)*', "ABBR"),
     (r'(?<=<)[\s]*(/abbr)(\s)*', "ABBRCLOSE"),
@@ -85,10 +95,6 @@ token_exp = [
     # DIV TAG
     (r'(?<=<)[\s]*(div)(\s)*', "DIV"),
     (r'(?<=<)[\s]*(/div)(\s)*', "DIVCLOSE"),
-    
-    # A TAG
-    (r'(?<=<)[\s]*(a)(\s)*', "A"),
-    (r'(?<=<)[\s]*(/a)(\s)*', "ACLOSE"),
     
     # IMG TAG (Void)
     (r'(?<=<)[\s]*(img)(\s)*', "IMG"),
@@ -120,21 +126,27 @@ token_exp = [
     (r'(?<=<)[\s]*(th)(\s)*',"TH"),
     (r'(?<=<)[\s]*(/th)(\s)*', "THCLOSE"),
     
-    # ATTRIBUTE GLOBAL
-    (r'[\s]*(id="(.)+?")(\s)*',"ID"),
-    (r'[\s]*(style="(.)+?")(\s)*',"STYLE"),
-    (r'[\s]*(class="(.)+?")(\s)*',"CLASS"),
+    # P TAG
+    (r'(?<=<)[\s]*(p)(\s)*', "P"),
+    (r'(?<=<)[\s]*(/p)(\s)*', "PCLOSE"),
     
-    # ATTRIBUTE TAMBAHAN
-    (r'[\s]*(rel="(.)+?")(\s)*',"REL"),
-    (r'[\s]*(href="(.)+?")(\s)*',"HREF"),
-    (r'[\s]*(src="(.)+?")(\s)*',"SRC"),
-    (r'[\s]*(alt="(.)+?")(\s)*',"ALT"),
-    (r'[\s]*(type="(.)+?")(\s)*',"TYPEBUTTON"),
-    (r'[\s]*(type="(.)+?")(\s)*',"TYPEINPUT"),
-    (r'[\s]*(action="(.)+?")(\s)*',"ACTION"),
-    (r'[\s]*(method="(GET|POST)")(\s)*',"METHOD"),
+    # BR TAG (Void)
+    (r'(?<=<)[\s]*(br)(\s)*', "BR"),
     
+    # EM TAG
+    (r'(?<=<)[\s]*(em)(\s)*', "EM"),
+    (r'(?<=<)[\s]*(/em)(\s)*', "EMCLOSE"),
+    
+    # B TAG
+    (r'(?<=<)[\s]*(b)(\s)*', "B"),
+    (r'(?<=<)[\s]*(/b)(\s)*', "BCLOSE"),
+    
+    # A TAG
+    (r'(?<=<)[\s]*(a)(\s)*', "A"),
+    (r'(?<=<)[\s]*(/a)(\s)*', "ACLOSE"),
+    
+    
+    (r'\n', None), #NEWLINE
     (r'[ \t]+',None),# Whitespaces
     
     ]
