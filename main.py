@@ -1,4 +1,5 @@
 from FileHandler import FileHandler
+import time
 from file_processing import create_token
 class PDA:
     def __init__(self):
@@ -15,85 +16,53 @@ class PDA:
         productions = parsedLines['productions']
         ListToken.insert(0,'e')
         ListToken.append('e')
-        previousStackSymbol = initStackSymbol
+
         currentStackSymbol = initStackSymbol
         currentState = initialState
 
         print('State\tInput\tStack\tMove')
         print('{}\t {}\t {}\t ({}, {})'.format(currentState, '_', 'Z', currentStackSymbol, self.stack))
-        def computemini(previousStackSymbol, currentStackSymbol, StackInput ,currentState ,productions, ListToken):
-            for token in ListToken:
-                #print('Current TOS', currentStackSymbol)
-                for production in productions:
+        for token in ListToken:
+            #print('Current TOS', currentStackSymbol)
+            for production in productions:
+                stop = False
+                print(token)
+                print(" Production State : " + production[0])
+                print(" Current State : " + currentState)
+                print(" Production Token : " + production[1])
+                print(" Current Token : " + token)
+                print(" Production Stack Symbol : " + production[2])
+                print(" Current Stack Symbol : " + currentStackSymbol)
+                print((production[0] == currentState) and (production[1] == token) and (production[2] == currentStackSymbol))
+                if ((production[0] == currentState) and (production[1] == token) and (production[2] == currentStackSymbol)):
+                    print(production[0])
+                    print(production[1])
+                    print(production[2])
+                    print(production[3])
+                    print(production[4])
+                    currentState = production[3]
+                    self.stack.pop()
                     stop = False
-                    # print(token)
-                    print(" Production State : " + production[0])
-                    print(" Current State : " + currentState)
-                    print(" Production Token : " + production[1])
-                    print(" Current Token : " + token)
-                    print(" Production Stack Symbol : " + production[2])
-                    print(" Current Stack Symbol : " + str(currentStackSymbol))
-                    # print((production[0] == currentState) and (production[1] == token) and (production[2] == currentStackSymbol))
-                    if ((production[0] == currentState) and (production[1] == token) and (production[2] == currentStackSymbol)):
-                        print(production[0])
-                        print(production[1])
-                        print(production[2])
-                        print(production[3])
-                        print(production[4])
-                        if(len(production[4]) > 1):
-                            for prod in production[4]:
-                                newcurrentState = production[3]
-                                newstack = StackInput.copy()
-                                newpreviousStackSymbol = previousStackSymbol
-                                newcurrentStackSymbol = currentStackSymbol
-                                newstack.pop()
-                                prod.reverse()
-                                for symbol in prod:
-                                    if(symbol != 'e'):
-                                        newstack.append(symbol)
-                                print("newstack" + str(newstack))
-                                result = computemini(newpreviousStackSymbol, newcurrentStackSymbol,newstack,newcurrentState,productions,ListToken)
-                                if result:
-                                    currentState = production[3]
-                                    StackInput.pop()
-                                    stop = False
-                                    for symbol in prod:
-                                        if(symbol != 'e'):
-                                            StackInput.append(symbol)
-                                    prod.reverse()
-                                    stop = True
-                                    break
-                                prod.reverse()
-
-                        else:
-                            currentState = production[3]
-                            StackInput.pop()
-                            stop = False
-                            production[4][0].reverse()
-                            for symbol in production[4][0]:
-                                if(symbol != 'e'):
-                                    StackInput.append(symbol)
-                            stop = True
-                            break
-                    if stop:
-                        break
-                if(len(StackInput) - 1 >= 0):
-                    currentStackSymbol = StackInput[len(StackInput)-1]
-                else:
-                    currentStackSymbol = production[4][0]
-                previousStackSymbol = currentStackSymbol
-                print('{}\t {}\t {}\t ({}, {})'.format(currentState, token, previousStackSymbol, currentStackSymbol, StackInput))
-
-            if(currentState in finalStates):
-                return True
+                    production[4].reverse()
+                    for symbol in production[4]:
+                        if(symbol != 'e'):
+                            self.stack.append(symbol)
+                    stop = True
+                    break
+                if stop:
+                    break
+            if(len(self.stack) - 1 >= 0):
+                currentStackSymbol = self.stack[len(self.stack)-1]
             else:
-                return False
-        result = computemini(previousStackSymbol,currentStackSymbol,self.stack,currentState,productions,ListToken)
-        if result:
-            print("ACCEPTED")
+                currentStackSymbol = production[4][0]
+            previousStackSymbol = currentStackSymbol
+            print('{}\t {}\t {}\t ({}, {})'.format(currentState, token, previousStackSymbol, currentStackSymbol, self.stack))
+            time.sleep(0.5)
+
+        if(currentState in finalStates):
+            print('String accepted by PDA.')
         else:
-            print("REJECTED")
-    
+            print('String rejected by PDA.')
 
 def main():
     fh = FileHandler()
