@@ -45,7 +45,7 @@ class FileHandler:
             production = productions[i]
             for j in range(i+1,len(productions)):
                 production2 = productions[j]
-                if(production[0] == production2[0] and production[1] == production2[1] and production[2] == production2[2] and production2[4] not in production[4]):
+                if(production[0] == production2[0] and production[1] == production2[1] and production[2] == production2[2] and production2[4][0] not in production[4]):
                     print(production[4])
                     print(production2[4])
                     listindexhapus.append(j)
