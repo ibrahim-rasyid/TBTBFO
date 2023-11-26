@@ -26,14 +26,6 @@ class PDA:
             #print('Current TOS', currentStackSymbol)
             for production in productions:
                 stop = False
-                print(token)
-                print(" Production State : " + production[0])
-                print(" Current State : " + currentState)
-                print(" Production Token : " + production[1])
-                print(" Current Token : " + token)
-                print(" Production Stack Symbol : " + production[2])
-                print(" Current Stack Symbol : " + currentStackSymbol)
-                print((production[0] == currentState) and (production[1] == token) and (production[2] == currentStackSymbol))
                 if ((production[0] == currentState) and (production[1] == token) and (production[2] == currentStackSymbol)):
                     print(production[0])
                     print(production[1])
